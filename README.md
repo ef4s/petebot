@@ -1,0 +1,2 @@
+# petebot
+StarCraft bot
