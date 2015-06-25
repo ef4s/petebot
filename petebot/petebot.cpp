@@ -42,7 +42,7 @@ void reconnect()
 
 int main(int argc, const char* argv[])
 {
-	kdbStuff;
+	kdbStuff();
 	std::cout << "Connecting..." << std::endl;;
 	reconnect();
 	while (true)
@@ -325,11 +325,23 @@ void showForces()
 }
 void kdbStuff()
 {
-	int c = khpu("localhost", 1234, "myusername:mypassword"); // Connect to a Kdb+ server on the localhost port 1234 .
+	I c = khpu("localhost", 5000, "myusername:mypassword"); // Connect to a Kdb+ server on the localhost port 1234 .
+	K row = knk(3, ks((S)"ibm"), ki(93), ki(300));
+	//k(c, "'update", ks((S)"tab"), row, (K)0);
+
+	
+	k(-c, "insert", ks(ss("tab")), row, (K)0);
+	k(c, "", (K)0); // flush buffers 
+
+	//std::cout << "connecting to kdb" << std::endl;
+	
+	//std::cout << "connected!" << std::endl;
 	//k(-c, "a:2+2", (K)0);             // Asynchronously set a to be 4 on the server.
-	K r = k(c, "b:til 1000000", (K)0);  // Synchronously set b to be a list up to 1000000.
-	r = k(c, (S)0); // read incoming asynch
-	printf("%d\n", r->i);
+	//K r = k(c, "b:til 100", (K)0);  // Synchronously set b to be a list up to 1000000.
+	//std::cout << "b set" << std::endl;
+	//r = k(c, (S)0); // read incoming asynch
+	//std::cout << "c read" << std::endl;
+	//printf("%d\n", r->i);
 
 	//int retval;
 	//K x;
